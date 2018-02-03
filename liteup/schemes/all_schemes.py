@@ -1,4 +1,4 @@
-from liteup.schemes.easy_schemes import LuminosityTest, MaxWhite, FullScan, Flux, Strobe
+from liteup.schemes.easy_schemes import LuminosityTest, MaxWhite, FullScan, Flux, Strobe, Random
 from liteup.schemes.random_schemes import RandomColorFade, RandomColorChaos, Perlin
 from liteup.schemes.muni import Muni
 from liteup.schemes.scheme import Scheme

@@ -27,6 +27,13 @@ class MaxWhite(Scheme):
     def paint(self):
         return False
 
+class Random(Scheme):
+    def init(self):
+        self.setall([randint(0, 255), randint(0, 255), randint(0, 255), 40])
+
+    def paint(self):
+        return False
+
 
 class Nice(Scheme):
     PAUSE_BETWEEN_PAINTS = 1
