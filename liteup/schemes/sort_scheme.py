@@ -7,9 +7,9 @@ from liteup.schemes.base_schemes import GeneratorScheme
 # merge sort!
 
 
-def clean_array():
+def clean_array(size):
     array = []
-    for _ in range(390):
+    for _ in range(size):
         raw_color = colorsys.hsv_to_rgb(random(), 1.0, 1.0)
         new_color = Color(*(255 * v for v in raw_color),
                           brightness=1, gamma=True)
@@ -108,7 +108,7 @@ class Sort(GeneratorScheme):
     ui_select = True
 
     def draw_sort(self, sort):
-        array = clean_array()
+        array = clean_array(self.options.num_leds)
         for highlight in sort(array, 0, self.options.num_leds):
             yield self.draw(array, highlight)
 
@@ -119,8 +119,9 @@ class Sort(GeneratorScheme):
             time.sleep(1)
 
     def generator(self):
-        yield from self.draw_sort(bubblesort)
+        yield from self.draw_sort(mergesort)
         yield from self.draw_sort(quicksort)
+        yield from self.draw_sort(bubblesort)
 
     def draw(self, array, highlights):
         for idx, color in enumerate(array):

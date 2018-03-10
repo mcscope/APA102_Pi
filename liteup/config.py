@@ -1,2 +1,3 @@
-corners = [0, 117, 176, 295]
-center = 343
+corners = [0, 72]
+center = 72
+num_leds = 144
