@@ -57,12 +57,12 @@ def bubblesort(array, start, stop):
 
     for _ in range(math.ceil((len(array) / 2))):
         for x in range(len(array) - 1):
-            if array[x] < array[x + 1]:
+            if array[x] > array[x + 1]:
                 swap(x, x + 1)
                 yield [x, x + 1]
 
         for x in range(len(array) - 2, -1, -1):
-            if array[x] < array[x + 1]:
+            if array[x] > array[x + 1]:
                 swap(x, x + 1)
                 yield [x, x + 1]
 
@@ -79,7 +79,6 @@ def quicksort(array, start, stop):
 
     while larger_index + 1 > smaller_index:
         if pivot < array[larger_index]:
-            print('larger')
             # good case, this is the right side
             # just shift the whole and continue!
             array[hole] = array[larger_index]
@@ -87,7 +86,6 @@ def quicksort(array, start, stop):
             hole -= 1
             yield [hole]
         else:
-            print('smaller')
             # gotta put it on the other side
             tmp = array[larger_index]
             array[larger_index] = array[smaller_index]
@@ -119,13 +117,13 @@ class Sort(GeneratorScheme):
             time.sleep(1)
 
     def generator(self):
-        yield from self.draw_sort(mergesort)
-        yield from self.draw_sort(quicksort)
-        yield from self.draw_sort(bubblesort)
+        while True:
+            yield from self.draw_sort(mergesort)
+            yield from self.draw_sort(quicksort)
+            yield from self.draw_sort(bubblesort)
 
     def draw(self, array, highlights):
         for idx, color in enumerate(array):
-            # TODO highlight modifications
             if idx in highlights:
                 color.paint(self.strip, idx, brightness=100)
             else:
