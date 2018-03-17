@@ -29,9 +29,12 @@ def main():
         old_scheme = None
         fresh_config = options.scheme
         Stripcls = ImageStrip if options.save_image else APA102
+        # Initialize the strip
         strip = Stripcls(num_leds=options.num_leds,
                          order="RGB",
-                         max_speed_hz=5000000)  # Initialize the strip
+                         max_speed_hz=4000000)
+        # Supposed to be 8k but
+        # we get flicker at the end if I set that
         while True:
             if fresh_config and fresh_config != old_config:
                 SchemeCls = SCHEME_CHOICES[fresh_config.lower()]

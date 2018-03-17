@@ -27,12 +27,30 @@ class MaxWhite(Scheme):
     def paint(self):
         return False
 
+
+def walk(color):
+    color += randint(-3, 3)
+    color = max(0, color)
+    color = min(255, color)
+    return color
+
+
 class Random(Scheme):
+    PAUSE_BETWEEN_PAINTS = 0
+
     def init(self):
-        self.setall([randint(0, 255), randint(0, 255), randint(0, 255), 40])
+        self.red = randint(0, 255)
+        self.green = randint(0, 255)
+        self.blue = randint(0, 255)
+        self.setall([self.red, self.green, self.blue, 40])
 
     def paint(self):
-        return False
+        self.red = walk(self.red)
+        self.green = walk(self.green)
+        self.blue = walk(self.blue)
+        self.setall([self.red, self.green, self.blue, 40])
+        print(self.red, self.green, self.blue, 40)
+        return True
 
 
 class Nice(Scheme):
@@ -40,6 +58,18 @@ class Nice(Scheme):
 
     def init(self):
         self.setall([0xFF, 0x45, 0x05, 40])
+
+    def paint(self):
+        return False
+
+
+class Lamp(Scheme):
+    PAUSE_BETWEEN_PAINTS = 1
+
+    def init(self):
+        self.strip.clear_strip()
+        for x in range(80, 220):
+            self.strip.set_pixel(x, 0xFF, 0x85, 0x35, 100)
 
     def paint(self):
         return False
