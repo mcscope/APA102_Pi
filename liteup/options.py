@@ -30,10 +30,6 @@ parser.add('--from_ppm', type=str, help='ImageScan scheme can scan over a ppm im
 parser.add('--isolate', action='store_true', help="Don't poll servers to change config, just stick with initial config")
 
 
-# for a in parser._actions:
-# print(repr(a))
-# MWahahaha
-
 
 def parse_options():
     options = parser.parse_args()
