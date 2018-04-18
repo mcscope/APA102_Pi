@@ -4,14 +4,51 @@ from datetime import datetime, timedelta
 import itertools
 import time
 from liteup.schemes.scheme import Scheme
-from liteup.APA102.color_utils import gamma_correct_color
+from liteup.APA102.color_utils import gamma_correct_color, hue_to_rgb
 from liteup.schemes.base_schemes import GeneratorScheme
+
+
+class rainbowwaves(GeneratorScheme):
+    PAUSE_BETWEEN_PAINTS = 0.010
+
+    def generator(self):
+        while 1:
+            for x in range(0, self.options.num_leds):
+                r, g, b = hue_to_rgb(x / self.options.num_leds)
+                self.strip.set_pixel(x, r, g, b, self.options.brightness)
+                self.strip.rotate()
+                yield True
+
+
+class rainbowsmooth(GeneratorScheme):
+    PAUSE_BETWEEN_PAINTS = 0.06
+
+    def generator(self):
+        while 1:
+            for x in range(0, self.options.num_leds):
+                r, g, b = hue_to_rgb(x / self.options.num_leds)
+                self.strip.set_pixel(0, r, g, b, self.options.brightness)
+                self.strip.rotate()
+                yield True
+
+
+class partytime(GeneratorScheme):
+
+    def generator(self):
+        while 1:
+
+            for x in range(0, self.options.num_leds):
+                r, g, b = hue_to_rgb(x / self.options.num_leds)
+                self.strip.set_pixel(x, r, g, b, self.options.brightness)
+                self.strip.rotate()
+                yield True
 
 
 class Strobe(Scheme):
     HERTZ = 10
 
     def paint(self):
+
         self.setall((0xFF, 0xFF, 0xFF, 50))
         self.strip.show()
         time.sleep(1 / self.HERTZ)
@@ -64,7 +101,8 @@ class Breath(Scheme):
         brightness = math.sin(progress * 3.14159) * 100
         self.setall([0xFF, 0x45, 0x05, brightness])
 
-        meditation_completeness = ((now - self.start_time) / self.meditation_time)
+        meditation_completeness = (
+            (now - self.start_time) / self.meditation_time)
         to_darken = int(self.options.num_leds * meditation_completeness)
 
         # do a bit of magic to make us bring the lights back
@@ -74,8 +112,7 @@ class Breath(Scheme):
 
         for pix in range(to_darken):
             self.strip.set_pixel(pix, 0, 0, 0, 0)
-        if to_darken > self.options.num_leds * 1.2:
-            start
+
         return True
 
 

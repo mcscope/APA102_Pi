@@ -188,9 +188,9 @@ class Sort(GeneratorScheme):
     def generator(self):
         while True:
             for case in (None, Case.PRESORTED, Case.REVERSE):
-                self.PAUSE_BETWEEN_PAINTS = 0.0
-                yield from self.draw_sort(quicksort, case)
+                self.PAUSE_BETWEEN_PAINTS = 0.1
                 yield from self.draw_sort(mergesort, case)
+                yield from self.draw_sort(quicksort, case)
                 yield from self.draw_sort(heapsort, case)
                 yield from self.draw_sort(bubblesort, case)
                 self.PAUSE_BETWEEN_PAINTS = 0.1

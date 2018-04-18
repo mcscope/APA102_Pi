@@ -1,4 +1,6 @@
-# TODO do I like this?
+import colorsys
+
+# TODO does this produce good results?
 GAMMA_CORRECT_FACTOR = 2.8
 
 
@@ -77,3 +79,11 @@ def gamma_correct_color(color, num_bits=8):
         return [new_r, new_g, new_b]
     elif len(color) == 4:
         return [new_r, new_g, new_b, brightness]
+
+
+def hue_to_rgb(hue, saturation=1.0, value=1.0):
+    """Hue ought to be a float,
+    Translate it to the RGB colorspace
+    """
+    raw_color = colorsys.hsv_to_rgb(hue, saturation, value)
+    return (int(255 * v) for v in raw_color)

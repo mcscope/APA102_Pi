@@ -1,6 +1,6 @@
 from random import randint
 import colorsys
-from liteup.APA102.color_utils import gamma_correct_color, gamma_correct
+from liteup.APA102.color_utils import gamma_correct_color, gamma_correct, hue_to_rgb
 
 
 class Color:
@@ -25,6 +25,10 @@ class Color:
                      brightness)
 
         return cls(*gamma_correct_color(raw_color))
+
+    @classmethod
+    def from_hue(cls, hue):
+        return cls(*hue_to_rgb(hue), brightness=1, gamma=True)
 
     def paint(self, strip, number, brightness=None):
 
