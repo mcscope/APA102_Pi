@@ -9,6 +9,8 @@ from liteup.schemes.base_schemes import GeneratorScheme
 
 
 class rainbowwaves(GeneratorScheme):
+    ui_select = True
+
     PAUSE_BETWEEN_PAINTS = 0.010
 
     def generator(self):
@@ -21,6 +23,8 @@ class rainbowwaves(GeneratorScheme):
 
 
 class rainbowsmooth(GeneratorScheme):
+    ui_select = True
+
     PAUSE_BETWEEN_PAINTS = 0.06
 
     def generator(self):
@@ -33,6 +37,7 @@ class rainbowsmooth(GeneratorScheme):
 
 
 class partytime(GeneratorScheme):
+    ui_select = True
 
     def generator(self):
         while 1:
