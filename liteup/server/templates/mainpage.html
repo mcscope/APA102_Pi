@@ -9,7 +9,6 @@
   }
   .scheme_choices {
         width: 24%;
-
   }
 
   .scheme_choices button{
@@ -23,7 +22,6 @@
     font-size: x-large;
     background-size: 100%;
     height:200px;
-
   }
   .scheme_container {
     display: flex;
@@ -31,6 +29,9 @@
     margin-right: auto;
     flex-wrap: wrap;
     font-weight: 700px;
+    margin: 30px;
+    justify-content: space-evenly;
+
   }
   .header {
     text-align: center;
@@ -54,9 +55,6 @@
     <h1>
       -LITEUP-SERVER-
     </h1>
-    <h4>
-      TODO: LITEUPS LISTENING:0
-    </h4>
   </div>
   <div class="scheme_container">
     {% for scheme_name, scheme_image in scheme_names %}

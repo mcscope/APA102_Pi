@@ -5,6 +5,7 @@ import itertools
 import time
 from liteup.schemes.scheme import Scheme
 from liteup.APA102.color_utils import gamma_correct_color, hue_to_rgb
+from liteup.APA102.color_utils import linear_hue_to_rgb
 from liteup.schemes.base_schemes import GeneratorScheme
 
 
@@ -46,6 +47,20 @@ class partytime(GeneratorScheme):
                 r, g, b = hue_to_rgb(x / self.options.num_leds)
                 self.strip.set_pixel(x, r, g, b, self.options.brightness)
                 self.strip.rotate()
+                yield True
+
+
+class huetest(GeneratorScheme):
+    ui_select = True
+
+    PAUSE_BETWEEN_PAINTS = 0.010
+
+    def generator(self):
+        while 1:
+            for x in range(0, self.options.num_leds):
+                r, g, b = linear_hue_to_rgb(x / self.options.num_leds)
+                self.strip.set_pixel(x, r, g, b, self.options.brightness,
+                                     gamma=True)
                 yield True
 
 
