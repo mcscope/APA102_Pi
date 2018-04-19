@@ -25,23 +25,39 @@ def main():
     async def launch():
         # this is the supervisor loop
 
-        old_config = ""
+        old_config = {}
         old_scheme = None
-        fresh_config = options.scheme
+        fresh_config = {"scheme_name": options.scheme}
         Stripcls = ImageStrip if options.save_image else APA102
         strip = Stripcls(num_leds=options.num_leds,
                          order="RGB",
                          max_speed_hz=5000000)  # Initialize the strip
         while True:
             if fresh_config and fresh_config != old_config:
-                SchemeCls = SCHEME_CHOICES[fresh_config.lower()]
+                print(f"fresh config: {fresh_config}")
 
-                if old_scheme:
-                    old_scheme.stop()
+                # todo is it possible to truely parse these options with
+                # configargparse?
+                for name, value in fresh_config.items():
+                    # todo attempt to not fake this
+                    if name == "scheme_name":
+                        continue
+                    if name == 'brightness':
+                        options.brightness = int(value)
+                        print(options.brightness)
 
-                scheme = SchemeCls(strip, options=options)
-                old_scheme = scheme
-                asyncio.ensure_future(scheme.start())
+                fresh_scheme = fresh_config.get("scheme_name")
+                if fresh_scheme != old_config.get("scheme_name"):
+                    # TODO maybe we should ALWAYS do this on a config change
+                    # is it ever safe to update options on the fly?
+                    SchemeCls = SCHEME_CHOICES[fresh_scheme.lower()]
+
+                    if old_scheme:
+                        old_scheme.stop()
+
+                    scheme = SchemeCls(strip, options=options)
+                    old_scheme = scheme
+                    asyncio.ensure_future(scheme.start())
 
                 old_config = fresh_config
 
@@ -79,9 +95,7 @@ async def fetch(server, session):
     if not response.status == 200:
         return None
 
-    server_resp = json.loads(resp)
-
-    return server_resp.get('current_scheme')
+    return json.loads(resp)
 
 
 if __name__ == '__main__':

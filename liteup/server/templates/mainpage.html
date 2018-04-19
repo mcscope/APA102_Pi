@@ -3,6 +3,7 @@
   <title> Liteup Server! </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <style type="text/css">
+
   body {
     background-color: #101010;
     -webkit-text-fill-color: ivory;
@@ -47,14 +48,60 @@
     margin-top: 5px;
     margin-bottom: 10px;
   }
+  .config_container {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .config * {
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .config button {
+    width: 200px;
+    height: 30px;
+    margin-top: 30px;
+    border-radius: 30px;
+    display: block;
 
+
+
+  }
 </style>
 </head>
+
+{% macro draw_config(option) -%}
+  <div class="config">
+    <div class="description">
+      {{option.description}}
+    </div>
+    <div class="slidecontainer">
+      <input type="range" min="1" max="100" value="{{option.cur_value}}" class="slider" name="{{option.name}}">
+      <button type="submit">
+
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro draw_config_container(config_options) -%}
+  <form method="post" action="/config">
+
+  {% for option in config_options %}
+      {{draw_config(option)}}
+
+  {% endfor %}
+  </form>
+{%- endmacro %}
+
 <body>
   <div class="header">
     <h1>
-      -LITEUP-SERVER-
+      -LITEUP-CONTROL-
     </h1>
+  </div>
+  <div class="config_container">
+    {{draw_config_container(config_options)}}
   </div>
   <div class="scheme_container">
     {% for scheme_name, scheme_image in scheme_names %}
