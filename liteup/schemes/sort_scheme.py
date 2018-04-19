@@ -3,12 +3,20 @@ import time
 from random import random
 from liteup.APA102.color_utils import linear_hue_to_rgb
 from liteup.schemes.base_schemes import GeneratorScheme
-# merge sort!
+import attr
+
+USE_FOCUS = True
 
 
 class Case:
     PRESORTED = 1
     REVERSE = 2
+
+
+@attr.s
+class Visual(object):
+    highlights = attr.ib(default=attr.Factory(list))
+    focus = attr.ib(default=None)
 
 
 def fresh_random_array(size, case=None):
@@ -36,6 +44,7 @@ def mergesort(array, start=None, stop=None):
     # merge!
     lhead, lstop = start, midpoint
     rhead = midpoint
+    yield Visual([], (start, stop))
 
     # there's actual efficent in-place merge algorithm
     # so we're gonna visually simulate it by inserting elements before
@@ -44,22 +53,24 @@ def mergesort(array, start=None, stop=None):
         if array[lhead] < array[rhead]:
             # easy, it's already in the right spot
             lhead += 1
-            yield [lhead - 1]
+            yield Visual([lhead - 1], (start, stop))
         else:
             tmp = array.pop(rhead)
             array.insert(lhead, tmp)
             lhead += 1
             lstop += 1
             rhead += 1
-            yield [lhead + 1, rhead - 1]
+            yield Visual([lhead + 1, rhead - 1], (start, stop))
+
+    yield Visual([], (start, stop))
 
 
 def swap(array, x, y):
-    yield [x, y]
+    yield Visual([x, y])
     tmp = array[x]
     array[x] = array[y]
     array[y] = tmp
-    yield [x, y]
+    yield Visual([x, y])
 
 
 def bubblesort(array):
@@ -105,7 +116,7 @@ def siftdown(array, start, end):
 
     [0,1,0,x,x,0,0]
     """
-    yield [start]
+    yield Visual([start])
     root = start
     leftchild = (start) * 2 + 1
 
@@ -149,7 +160,7 @@ def quicksort(array, start=None, stop=None):
             array[hole] = array[larger_index]
             larger_index -= 1
             hole -= 1
-            yield [hole]
+            yield Visual([hole], focus=(start, stop))
         else:
             # gotta put it on the other side
             tmp = array[larger_index]
@@ -157,13 +168,14 @@ def quicksort(array, start=None, stop=None):
 
             array[smaller_index] = tmp
             smaller_index += 1
-            yield [smaller_index, larger_index]
+            yield Visual([smaller_index, larger_index], focus=(start, stop))
 
     array[hole] = pivot
-    yield [hole]
+    yield Visual([hole], focus=(start, stop))
 
     yield from quicksort(array, start, hole)
     yield from quicksort(array, hole + 1, stop)
+    yield Visual(focus=(start, stop))
 
 
 class Sort(GeneratorScheme):
@@ -172,21 +184,21 @@ class Sort(GeneratorScheme):
 
     def draw_sort(self, sort, case=None):
         array = fresh_random_array(self.options.num_leds, case)
-        for highlight in sort(array):
-            yield self.draw(array, highlight)
+        for visualization in sort(array):
+            yield self.draw(array, visualization)
 
         for _ in range(5):
-            yield self.draw(array, [])
+            yield self.draw(array, Visual())
             time.sleep(1)
-            yield self.draw(sorted(array), [])
+            yield self.draw(sorted(array), Visual())
             time.sleep(1)
 
     def generator(self):
         while True:
             for case in (None, Case.PRESORTED, Case.REVERSE):
-                self.PAUSE_BETWEEN_PAINTS = 0.1
-                yield from self.draw_sort(mergesort, case)
+                self.PAUSE_BETWEEN_PAINTS = 0.0
                 yield from self.draw_sort(quicksort, case)
+                yield from self.draw_sort(mergesort, case)
                 yield from self.draw_sort(heapsort, case)
                 yield from self.draw_sort(bubblesort, case)
                 self.PAUSE_BETWEEN_PAINTS = 0.1
@@ -195,10 +207,24 @@ class Sort(GeneratorScheme):
                 yield from self.draw_sort(quicksort, case)
                 yield from self.draw_sort(bubblesort, case)
 
-    def draw(self, array, highlights):
+    def draw(self, array, vis):
+        """
+        Draw the current array.
+        We're using a linearized version of hue to make it very easy to
+        distinguish low values from high values (naive hue 'wraps' around)
+
+        focus is a tuple of min/max that is the area the algorithm is focused on r
+        ight now, like it's recursive scope.
+        Highlights are things being currently swapped
+
+        """
         for idx, color in enumerate(array):
-            r, g, b = linear_hue_to_rgb(color)
-            brightness = 100 if idx in highlights else 1
+            value = 1.0
+            if USE_FOCUS and vis.focus and (idx < vis.focus[0] or idx > vis.focus[1]):
+                value = 0.5
+
+            r, g, b = linear_hue_to_rgb(color, value=value)
+            brightness = 33 if idx in vis.highlights else 1
             self.strip.set_pixel(idx, r, g, b, brightness, gamma=True)
 
         return True

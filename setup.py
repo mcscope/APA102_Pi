@@ -14,6 +14,7 @@ setup(name='liteup',
           "requests",
           "flask",
           "aiohttp",
-          "spidev"
-          ]
+          "spidev",
+          "attrs"
+      ]
       )
