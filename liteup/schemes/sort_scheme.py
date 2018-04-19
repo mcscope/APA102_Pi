@@ -1,8 +1,7 @@
-import colorsys
+import math
 import time
 from random import random
-from liteup.lib.color import Color
-import math
+from liteup.APA102.color_utils import linear_hue_to_rgb
 from liteup.schemes.base_schemes import GeneratorScheme
 # merge sort!
 
@@ -15,10 +14,7 @@ class Case:
 def fresh_random_array(size, case=None):
     array = []
     for _ in range(size):
-        raw_color = colorsys.hsv_to_rgb(random(), 1.0, 1.0)
-        new_color = Color(*(255 * v for v in raw_color),
-                          brightness=1, gamma=True)
-        array.append(new_color)
+        array.append(random())
     if case:
         if case == Case.PRESORTED:
             array.sort()
@@ -201,9 +197,8 @@ class Sort(GeneratorScheme):
 
     def draw(self, array, highlights):
         for idx, color in enumerate(array):
-            if idx in highlights:
-                color.paint(self.strip, idx, brightness=100)
-            else:
-                color.paint(self.strip, idx)
+            r, g, b = linear_hue_to_rgb(color)
+            brightness = 100 if idx in highlights else 1
+            self.strip.set_pixel(idx, r, g, b, brightness, gamma=True)
 
         return True
