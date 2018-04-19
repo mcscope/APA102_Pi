@@ -1,4 +1,5 @@
 import math
+import random
 from liteup.schemes.base_schemes import GeneratorScheme
 from liteup.APA102.color_utils import linear_hue_to_rgb
 import numpy as np
@@ -17,21 +18,22 @@ class Beta(GeneratorScheme):
     ui_select = True
 
     def generator(self):
-        self.size = self.options.num_leds - SIGNAL_SIZE
-        N_Trials = 100
-        p = .3
-        a = 1
-        b = 1
-        x = np.linspace(0, 1, self.size)
-        for i in range(N_Trials):
-            trial = stats.bernoulli.rvs(p)
-            if trial == 1:
-                a += 1
-            else:
-                b += 1
+        while True:
+            self.size = self.options.num_leds - SIGNAL_SIZE
+            N_Trials = 100
+            p = random.random()
+            a = 1
+            b = 1
+            x = np.linspace(0, 1, self.size)
+            for i in range(N_Trials):
+                trial = stats.bernoulli.rvs(p)
+                if trial == 1:
+                    a += 1
+                else:
+                    b += 1
 
-            self.array = stats.beta(a, b).pdf(x)
-            yield self.draw(trial)
+                self.array = stats.beta(a, b).pdf(x)
+                yield self.draw(trial)
 
     def draw(self, success):
         """
@@ -41,7 +43,6 @@ class Beta(GeneratorScheme):
 
         for idx, count in enumerate(self.array):
             val = count / (maxval + 0.1)
-            print(val)
             r, g, b = linear_hue_to_rgb(val)
             self.strip.set_pixel(idx, r, g, b, 1, gamma=True)
 

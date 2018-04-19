@@ -1,5 +1,6 @@
 .sass-cache
 .DS_Store
+._.DS_Store
 *.pyc
 *~
 *.swp

@@ -58,8 +58,12 @@ def read_image(filename, options):
     with open(filename, "rb") as file:
         buf = file.read()
         # TODO handle comments!
-        magicnum, width, height, maxval, image = buf.split(maxsplit=4)
+        magicnum, rest = buf.split(maxsplit=1)
         assert magicnum == b'P6'
+        if rest.startswith(b'#'):
+            _, rest = rest.split(b"\n", maxsplit=1)
+
+        width, height, maxval, image = rest.split(maxsplit=3)
         width = int(width)
         height = int(height)
         assert maxval == b'255'
