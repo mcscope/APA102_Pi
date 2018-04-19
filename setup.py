@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='liteup',
-      version='0.1',
+      version='0.2',
       description='APA102 LED colorschemes client and flask webserver',
       author='Chris Beacham',
       author_email='mcscope@gmail.com',
@@ -15,6 +15,8 @@ setup(name='liteup',
           "flask",
           "aiohttp",
           "spidev",
-          "attrs"
+          "attrs",
+          "numpy",
+          "scipy"
       ]
       )

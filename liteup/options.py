@@ -28,7 +28,12 @@ parser.add('--save_image', action='store_true', default=False, help='Output an i
 parser.add('--num_leds', type=int, default=390, help='how many leds to light up')
 parser.add('--from_ppm', type=str, help='ImageScan scheme can scan over a ppm image')
 parser.add('--isolate', action='store_true', help="Don't poll servers to change config, just stick with initial config")
-
+parser.add('--sort_alg',
+           type=str,
+           nargs="?",
+           help='Which sort alg to use if sort chosen!',
+           choices=['merge', 'heap', 'bubble', 'quick', ""],
+           default="")
 
 
 def parse_options():
