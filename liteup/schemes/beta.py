@@ -44,7 +44,7 @@ class Beta(GeneratorScheme):
         for idx, count in enumerate(self.array):
             val = count / (maxval + 0.1)
             r, g, b = linear_hue_to_rgb(val)
-            self.strip.set_pixel(idx, r, g, b, 1, gamma=True)
+            self.strip.set_pixel(idx, r, g, b, self.options.brightness, gamma=True)
 
         for idx in range(self.size, self.size + SIGNAL_SIZE):
             # We'll add a helpful signal to let you the result of our sample
@@ -52,6 +52,6 @@ class Beta(GeneratorScheme):
                 r, g, b = 255, 255, 255
             else:
                 r, g, b = 0, 0, 0
-            self.strip.set_pixel(idx, r, g, b, 1, gamma=True)
+            self.strip.set_pixel(idx, r, g, b, self.options.brightness, gamma=True)
 
         return True

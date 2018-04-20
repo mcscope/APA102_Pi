@@ -1,3 +1,9 @@
+'''
+This file contains schemes that are very simple. They're often used
+for static lighting or debugging LED issues
+
+A few more complicated schemes are here, they should be moved to seperate files
+'''
 import math
 from random import randint
 from datetime import datetime, timedelta
@@ -7,9 +13,22 @@ from liteup.schemes.scheme import Scheme
 from liteup.APA102.color_utils import gamma_correct_color, hue_to_rgb
 from liteup.APA102.color_utils import linear_hue_to_rgb
 from liteup.schemes.base_schemes import GeneratorScheme
+from liteup.lib.color import Color
 
 
-class rainbowwaves(GeneratorScheme):
+class OneOneOne(Scheme):
+    ui_select = True
+
+    PAUSE_BETWEEN_PAINTS = 0.6
+
+    def init(self):
+        self.setall((0x03, 0x03, 0x03, self.options.brightness))
+
+    def paint(self):
+        return False
+
+
+class RainbowWaves(GeneratorScheme):
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.010
@@ -23,7 +42,7 @@ class rainbowwaves(GeneratorScheme):
                 yield True
 
 
-class rainbowsmooth(GeneratorScheme):
+class RainbowSmooth(GeneratorScheme):
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.06
@@ -37,7 +56,7 @@ class rainbowsmooth(GeneratorScheme):
                 yield True
 
 
-class partytime(GeneratorScheme):
+class Partytime(GeneratorScheme):
     ui_select = True
 
     def generator(self):
@@ -50,7 +69,7 @@ class partytime(GeneratorScheme):
                 yield True
 
 
-class huetest(GeneratorScheme):
+class HueTest(GeneratorScheme):
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.010
@@ -232,3 +251,48 @@ class LuminosityTest(Scheme):
 
     def paint(self):
         return False
+
+
+class FullScan(Scheme):
+    PAUSE_BETWEEN_PAINTS = 0.1
+    color = [0, 0, 0]
+    color_step = [1, 0, 0]
+
+    def init(self):
+        self.setall(self.color)
+
+    def paint(self):
+        self.color = [val + step for val, step in zip(self.color, self.color_step)]
+
+        if max(self.color) > 0xFF:
+            self.color = [0, 0, 0]
+            self.color_step.append(self.color_step.pop(0))
+
+        self.setall(self.color + [31])
+        return True
+
+
+class GammaCorrectionDemo(Scheme):
+    PAUSE_BETWEEN_PAINTS = 0.1
+    color = [0, 0, 0]
+    color_step = [1, 0, 0]
+
+    def init(self):
+        self.setall(self.color)
+
+    def paint(self):
+        self.color = [val + step for val, step in zip(self.color, self.color_step)]
+
+        if max(self.color) > 0xFF:
+            self.color = [0, 0, 0]
+            self.color_step.append(self.color_step.pop(0))
+
+        gamma_color = gamma_correct_color(self.color)
+
+        for led in range(self.strip.num_leds):
+            if led < self.strip.num_leds / 2:
+                self.strip.set_pixel(led, *self.color)
+            else:
+                self.strip.set_pixel(led, *gamma_color)
+
+        return True
