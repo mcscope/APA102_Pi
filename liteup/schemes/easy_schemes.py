@@ -273,7 +273,6 @@ class FullScan(Scheme):
 
 
 class GammaCorrectionDemo(Scheme):
-    PAUSE_BETWEEN_PAINTS = 0.1
     color = [0, 0, 0]
     color_step = [1, 0, 0]
 
