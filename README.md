@@ -14,7 +14,7 @@ I will post the video when it is available.
 
 
 ## Schemes
-All of the light patterns are called Schemes. I've described a few below
+All of the light patterns are called Schemes (as in Colorscheme, or... evil plan). I've described a few below
 
 ### Perlin
   This is a gentle, calming rainbow pattern that visualizes the output of a Perlin random number generator.
@@ -38,6 +38,13 @@ All of the light patterns are called Schemes. I've described a few below
 
 ### Partytime
   It's a big party
+
+### ImageScan
+  This is one of the most powerful schemes, but it's only accessible via command line for right now. Y
+  
+  ou pass `--from_ppm=<filepath.ppm>` to the client, and imagescan will be selected. This opens up the ppm-formated image you specified and slowly scrolls the LED strip down the image from top to bottom, displaying 1 row at a time.  This lets you build lighting patterns using an image-editing tool like GIMP (which can save PPMs, btw) which gives you the ability to make really cool effects easily.  Several cool images are bundled with this library, I recommend `playimages/radiance.ppm`
+  
+  One of the upcoming changes to this library should be that this scheme can be invoked from the server, and allow you to upload images to the server.  This would be an awesome improvement
 
 ### AgentScheme / RTS
   Some attempts I made to make a game-like scheme with independent entities that interacted with eachother. Incomplete
