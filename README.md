@@ -17,33 +17,33 @@ I will post the video when it is available.
 All of the light patterns are called Schemes. I've described a few below
 
 ### Perlin
-    This is a gentle, calming rainbow pattern that visualizes the output of a Perlin random number generator.
+  This is a gentle, calming rainbow pattern that visualizes the output of a Perlin random number generator.
  This is like a random number generator that is moody, where each value is random overall, but correlated to the values around it. A great pattern.
 
 ### Flux
-    This pattern is bright during the day, but slowly dims and reddens as the night goes on. The intention is to create lighting that won't cause you to stay up late by cutting out blue light at night. It's inspired by the desktop program 'f.lux' that does the same thing.
+  This pattern is bright during the day, but slowly dims and reddens as the night goes on. The intention is to create lighting that won't cause you to stay up late by cutting out blue light at night. It's inspired by the desktop program 'f.lux' that does the same thing.
     In the morning, this scheme has an artifical sunrise, and then turns green shortly after as a signal to start the day.
 
 ### Perflux
-    This is the Perlin scheme, but it is filtered through Flux, so it reddens as the night goes on, has a sunrise, etc. This is a good scheme for permanent room lighting.
+  This is the Perlin scheme, but it is filtered through Flux, so it reddens as the night goes on, has a sunrise, etc. This is a good scheme for permanent room lighting.
 
 ### Muni
-    This is a visualization of real time San Francisco Bus Position. However, it wasn't as cool as it sounds because buses turn out to be quite slow.
+  This is a visualization of real time San Francisco Bus Position. However, it wasn't as cool as it sounds because buses turn out to be quite slow.
 
 ### Breathe
-    This Scheme is designed for meditation. It slowly pulses at the rate of a very slow breath, so you can match your breath to it and calm down. It also slowly dims from one side, like a candle burning down, to mark the passage of time
+  This Scheme is designed for meditation. It slowly pulses at the rate of a very slow breath, so you can match your breath to it and calm down. It also slowly dims from one side, like a candle burning down, to mark the passage of time
 
 ### Distribution / Beta / Sort
-    These are visualizations of various algorithms. Distribution shows a demo of sampling from various kinds of distributions. Beta shows training of a beta distribution, and the Sort scheme shows several different Computer Science sorting algorithms. Sort is really cool
+  These are visualizations of various algorithms. Distribution shows a demo of sampling from various kinds of distributions. Beta shows training of a beta distribution, and the Sort scheme shows several different Computer Science sorting algorithms. Sort is really cool
 
 ### Partytime
-    It's a big party
+  It's a big party
 
 ### AgentScheme / RTS
-    Some attempts I made to make a game-like scheme with independent entities that interacted with eachother. Incomplete
+  Some attempts I made to make a game-like scheme with independent entities that interacted with eachother. Incomplete
 
 ### Fullscan / OneOneOne / HueTest / Gamma Correction Demo
-    These exist for debugging/dev purposes.
+  These exist for debugging/dev purposes.
 
 ## Setup
 
