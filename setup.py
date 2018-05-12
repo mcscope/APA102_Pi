@@ -14,9 +14,10 @@ setup(name='liteup',
           "requests",
           "flask",
           "aiohttp",
-          "spidev",
+          # "spidev",
           "attrs",
           "numpy",
           "scipy"
-      ]
+      ],
+      extras_require={"Control LEDs on pi": "spidev", }
       )
