@@ -116,23 +116,18 @@ class Nice(Scheme):
 
 class Breath(Scheme):
     """
-    The total capacity of our lungs is about 6000 c.c., but during normal
-    breathing we only breath about 600 c.c. air per breathe in to our lungs. In
-    deep breathing the practitioner can inhale up to the total capacity of the
-    lungs, which increases breathing efficiency per breath. The normal breath
-    rate is 15 to 18 breaths per minute but in deep breathing this rate is
-    reduced to about 4 to 8 breaths per minute
+    Meditation Guide - slowly dim and brighten to suggest breath speed
+        'burn down' from one end to mark passage of time
 
     This targets 6 breaths a minute, or one every 10 seconds
+    Should burn down in 10 minutes
 
-    # darken leds as this thing goes on, to help me achieve a 10 minute meditation
     """
     PAUSE_BETWEEN_PAINTS = 0.01
     meditation_time = timedelta(minutes=10)
 
     def init(self):
         self.start_time = datetime.now()
-        pass
 
     def paint(self):
         now = datetime.now()
@@ -140,8 +135,7 @@ class Breath(Scheme):
         brightness = math.sin(progress * 3.14159) * 100
         self.setall([0xFF, 0x45, 0x05, brightness])
 
-        meditation_completeness = (
-            (now - self.start_time) / self.meditation_time)
+        meditation_completeness = ((now - self.start_time) / self.meditation_time)
         to_darken = int(self.options.num_leds * meditation_completeness)
 
         # do a bit of magic to make us bring the lights back
