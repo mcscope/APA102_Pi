@@ -107,6 +107,10 @@ If you are trying to write a new scheme, I recommend to do it on the raspberry p
 This project is at a nice place now, and I use it for daily room lighting, but I would like to improve it. Ideally, each scheme would be able to define any options that it wants, and have the server present those options to the user to control the details of the scheme. The bones of this are in place, but it should be fleshed out.
 I would also like to make some longer running schemes with emergent behavior.
 
+### CircuitPython
+At PyCon 2018, I was introduced to CircuitPython, which is an awesome project that allows you to run python directly on microcontrollers. I ported two of the schemes (perlin and sorts) to circuitpython. I have it running on a Gemma with a ring of 16 NeoPixels (ws2812), but it should be easy to extend that to other circuitpython chips.
+
+You can find that in the `circuitpy` folder
 ---
 ### Thanks Tinue
 Liteup contains a a fork of the great [APA102_Pi library by tinue](https://github.com/tinue/APA102_Pi).
