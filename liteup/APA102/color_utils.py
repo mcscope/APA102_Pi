@@ -1,4 +1,6 @@
-# TODO do I like this?
+import colorsys
+
+# TODO does this produce good results?
 GAMMA_CORRECT_FACTOR = 2.8
 
 
@@ -77,3 +79,27 @@ def gamma_correct_color(color, num_bits=8):
         return [new_r, new_g, new_b]
     elif len(color) == 4:
         return [new_r, new_g, new_b, brightness]
+
+
+def hue_to_rgb(hue, saturation=1.0, value=1.0):
+    """Hue ought to be a float,
+    Translate it to the RGB colorspace
+    """
+    raw_color = colorsys.hsv_to_rgb(hue, saturation, value)
+    return (int(255 * v) for v in raw_color)
+
+
+def linear_hue_to_rgb(hue, saturation=1.0, value=1.0):
+    """
+    Hue has a problem where it is actually defined as a circular space.
+    That makes a sort really confusing to watch because instead of red on one
+    side, you see red on both sides, since 0.0 and 1.0 are both red.
+    This removes the pink/purple side of the spectrum and shifts the values
+    so that 0.0 is a crisp blue and 1.0 is bright red, and there is no loop.
+    It's more intuitive to humans
+    """
+    hue = abs(float(hue)) % 1
+    SHIFT = 0.74
+    mapped_hue = hue * 0.75
+    corrected_hue = (((1 - mapped_hue) + SHIFT) % 1)
+    return hue_to_rgb(corrected_hue, saturation, value)

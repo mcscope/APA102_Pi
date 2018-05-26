@@ -1,5 +1,6 @@
 .sass-cache
 .DS_Store
+._.DS_Store
 *.pyc
 *~
 *.swp
@@ -8,3 +9,4 @@
 *egg-info
 *pycache*
 *config.py
+liteup/config.py

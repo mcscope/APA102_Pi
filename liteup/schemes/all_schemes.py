@@ -1,4 +1,4 @@
-from liteup.schemes.easy_schemes import LuminosityTest, MaxWhite, FullScan, Flux, Strobe, Random
+from liteup.schemes.easy_schemes import *
 from liteup.schemes.random_schemes import RandomColorFade, RandomColorChaos, Perlin
 from liteup.schemes.muni import Muni
 from liteup.schemes.scheme import Scheme
@@ -11,6 +11,8 @@ from liteup.schemes.twinkle_scheme import TwinkleScheme
 from liteup.schemes.agent_scheme import AgentScheme
 from liteup.schemes.sort_scheme import Sort
 from liteup.schemes.flowball import FlowBall
+from liteup.schemes.distribution import Distribution
+from liteup.schemes.beta import Beta
 
 Scheme_subclasses = Scheme.__subclasses__()
 all_schemes = Scheme.__subclasses__()

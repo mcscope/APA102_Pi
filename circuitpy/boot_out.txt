@@ -1,0 +1,1 @@
+Adafruit CircuitPython 2.2.4 on 2018-03-07; Adafruit Gemma M0 with samd21e18

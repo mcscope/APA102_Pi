@@ -82,6 +82,8 @@ class Muni(Scheme):
             for distance, stop in zip(distances, direction.stops):
                 dist_in_leds = int(distance / unit)
                 bookmark_led += dist_in_leds
+                bookmark_led = min(self.strip.num_leds - 1, bookmark_led)
+
                 # Don't want to overwrite a vehicle location with a stop.
                 # Stops often serve multiple vehicles
                 if self.strip.get_pixel(bookmark_led)[3] < 10:

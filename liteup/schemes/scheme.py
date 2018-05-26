@@ -24,6 +24,8 @@ class Scheme:
     autofade = False
     ui_select = True
 
+    options_supported = ["brightness"]
+
     def __init__(self, strip, options):
         self.strip = strip
         self.options = options
