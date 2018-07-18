@@ -1,20 +1,23 @@
 # Liteup
+Hi! If you're at my HOPE workshop, [Here are your setup instructions](HOPE_setup_readme.md)
+
 
 ![Screenshot of LED control Server](server_screenshot.png)
 
-This library should let you create a web-controlled APA102 LED strip, with logic driven by a Raspberry Pi.
+This library should let you create a web-controlled APA102 LED strip, with logic in python, run on a Raspberry Pi.
 
 It's written entirely in python and designed to be easily modifiable.
   Please feel free to clone, fork, or contribute
 
-This is going to be demo'd in the upcoming PyCon talk ["Visualizing Algorithms with Python and Programmable LEDs"](https://us.pycon.org/2018/schedule/presentation/131/)
+This was demo'd at PyCon at the talk ["Visualizing Algorithms with Python and Programmable LEDs"](https://us.pycon.org/2018/schedule/presentation/131/)
 
 Here are the slides from that talk: https://docs.google.com/presentation/d/e/2PACX-1vQk2sNPeNrV9uI6Gb6B8F0TzFMVhpD8hNFRbX50B1zFFnGC-MEbzM0hk_cpTCMSnfca-BND-bx0loFB/pub?start=false&loop=false&delayms=3000
-I will post the video when it is available.
 
+[Here is the video (youtube) ](https://www.youtube.com/watch?v=wJpUlnfwjbk)
+ Unfortunately the cropping means you can't seem the schemes in action. I will try to correct this soon.
 
 ## Schemes
-All of the light patterns are called Schemes (as in Colorscheme, or... evil plan). I've described a few below
+All of the light patterns are called Schemes. I've described a few below
 
 ### Perlin
   This is a gentle, calming rainbow pattern that visualizes the output of a Perlin random number generator.
@@ -39,33 +42,30 @@ All of the light patterns are called Schemes (as in Colorscheme, or... evil plan
 ### Partytime
   It's a big party
 
-### ImageScan
-  This is one of the most powerful schemes, but it's only accessible via command line for right now. Y
-  
-  ou pass `--from_ppm=<filepath.ppm>` to the client, and imagescan will be selected. This opens up the ppm-formated image you specified and slowly scrolls the LED strip down the image from top to bottom, displaying 1 row at a time.  This lets you build lighting patterns using an image-editing tool like GIMP (which can save PPMs, btw) which gives you the ability to make really cool effects easily.  Several cool images are bundled with this library, I recommend `playimages/radiance.ppm`
-  
-  One of the upcoming changes to this library should be that this scheme can be invoked from the server, and allow you to upload images to the server.  This would be an awesome improvement
-
 ### AgentScheme / RTS
   Some attempts I made to make a game-like scheme with independent entities that interacted with eachother. Incomplete
 
 ### Fullscan / OneOneOne / HueTest / Gamma Correction Demo
   These exist for debugging/dev purposes.
 
+### Demo
+   This exists to teach people how to edit their own scheme. Start editing here
+
 ## Setup
 
-This is designed to be run on a raspberry pi, but it may be possible to run it on other similar boards.
+This is designed to be run on a raspberry pi, but it may be possible to run it on other similar boards. Any kind of raspberry pi should do, though the pinout changes based on board.
 
-I've only had to install this a few times on my boards, so the setup process is not very smooth yet. Please let me know how I can improve it.
+I'm teaching a workshop on how to build one of these at Hackers on Planet Earth on July 20. Here's the setup instructions for that event - they're probably generally applicable [HOPE Workshop Setup](HOPE_setup_readme.md)
 
 ### Install
 To install, I believe you can use pip. I clone and then do `pip install -d .`  This library is not distributed on pip yet, so you must clone it first.
 
-You may encounter an issue with the spidev library if you are installing on a Mac/not a pi. That's the hardware interface library and it is not available for platforms without SPI headers. You can comment it out of the setup.py if you want to install there. There's a debug mode that makes programming light patterns away from hardware possible.
+You may encounter an issue with the `spidev` library if you are installing on a Mac/not a pi. That's the hardware interface library and it is not available for platforms without SPI headers. You can comment it out of the setup.py if you want to install there. There's a debug mode that makes programming light patterns away from hardware possible.
+EDIT: I believe I have fixed the `spidev` issue in setup.py by making it only install on the correct architecture. Let me know if you run into issues
 
 
 ### Client
-There's also the client library. That is the program that actually controls the LEDs, and is designed to be run on the Pi.
+The meat of this is in the client executable. That is the program that actually controls the LEDs, and is designed to be run on the Pi.
 It can be used in conjunction with a server, or as a standalone CLI script.
 
 ```python liteup/client.py sorts```
@@ -118,6 +118,7 @@ I would also like to make some longer running schemes with emergent behavior.
 At PyCon 2018, I was introduced to CircuitPython, which is an awesome project that allows you to run python directly on microcontrollers. I ported two of the schemes (perlin and sorts) to circuitpython. I have it running on a Gemma with a ring of 16 NeoPixels (ws2812), but it should be easy to extend that to other circuitpython chips.
 
 You can find that in the `circuitpy` folder
+
 ---
 ### Thanks Tinue
 Liteup contains a a fork of the great [APA102_Pi library by tinue](https://github.com/tinue/APA102_Pi).
