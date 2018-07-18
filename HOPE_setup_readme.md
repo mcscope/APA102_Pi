@@ -111,7 +111,8 @@ you should have a individually named raspberry pi on the wifi network now. Log i
 make sure you can see google:
 `ping www.google.com`
 
-### Setup - install liteup  and depenencies
+### Setup - install liteup  and dependencies
+
 - install convenience packages
 
 `sudo apt-get install vim`
