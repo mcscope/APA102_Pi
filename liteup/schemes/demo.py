@@ -16,6 +16,8 @@ calls must be rapid. To see one, look at the Muni scheme.
 
 Looking at the other schemes is a great way to get inspiration and see what's
 available. easy_schemes.py is a great source but there are lots to look at.
+All schemes must be imported in all_schemes.py so the client and the server are
+aware of them.
 '''
 from liteup.schemes.scheme import Scheme
 from liteup.APA102.color_utils import hue_to_rgb
