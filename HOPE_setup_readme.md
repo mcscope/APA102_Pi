@@ -111,7 +111,7 @@ you should have a individually named raspberry pi on the wifi network now. Log i
 make sure you can see google:
 `ping www.google.com`
 
-
+### Setup - install liteup  and depenencies
 - install convenience packages
 
 `sudo apt-get install vim`
@@ -175,10 +175,15 @@ The image shows a raspberry pi 3 but it should be the same for the zero. Double 
 I should have a prebuilt model you can see.
 
 I don't think I have headers in these kits so we'll solder right to the Raspberry Pi Zero boards.  I have some connectors that you may need to solder to the led strip if there aren't some already there.
-PLEASE NOTE:  LEDs are directional. There is a little arrow on the strip indicating the direction the data must flow.
 
-- Power from the 5v pin to the strip +5V (See note for 'larger arrays')
-- Ground from one of the PI GND pins to the strip GND
+- Power from the 5v pin to the strip +5V pad. (See note for 'larger arrays')
+- Ground from one of the PI GND pins to the strip GND pad
+- Clock from SCLK SPI Clock to CLK pad
+- Data from MOSI (Master Out, Slave In) SPI pin to CI pad
+
+## Troubleshooting:
+    - LEDs are directional. There is a little arrow on the strip indicating the direction the data must flow.
+    - If you didn't solder the strip connection yourself, cut back the heatshrink from the connection so you can see which wire goes to which pad. There are sometimes surprises underneath the heatshrink where they are soldered in a strange order.
 
 
 #### Changes for larger arrays than the one we are building:
