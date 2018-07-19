@@ -86,7 +86,7 @@ def hue_to_rgb(hue, saturation=1.0, value=1.0):
     Translate it to the RGB colorspace
     """
     raw_color = colorsys.hsv_to_rgb(hue, saturation, value)
-    return (int(255 * v) for v in raw_color)
+    return [int(255 * v) for v in raw_color]
 
 
 def linear_hue_to_rgb(hue, saturation=1.0, value=1.0):
