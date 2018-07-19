@@ -189,8 +189,8 @@ I don't think I have headers in these kits so we'll solder right to the Raspberr
 - Data from MOSI (Master Out, Slave In) SPI pin to CI pad
 
 ## Troubleshooting:
-    - LEDs are directional. There is a little arrow on the strip indicating the direction the data must flow.
-    - If you didn't solder the strip connection yourself, cut back the heatshrink from the connection so you can see which wire goes to which pad. There are sometimes surprises underneath the heatshrink where they are soldered in a strange order.
+  - LEDs are directional. There is a little arrow on the strip indicating the direction the data must flow.
+  - If you didn't solder the strip connection yourself, cut back the heatshrink from the connection so you can see which wire goes to which pad. There are sometimes surprises underneath the heatshrink where they are soldered in a strange order.
 
 
 #### Changes for larger arrays than the one we are building:
