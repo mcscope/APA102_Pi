@@ -1,7 +1,7 @@
 import os
 import configargparse
 from liteup.schemes.all_schemes import all_schemes, SCHEME_CHOICES
-
+import sys
 
 for name, cls in SCHEME_CHOICES.items():
     print(name, cls)
@@ -44,7 +44,7 @@ def parse_options(extra_config={}):
             command_line_format.append(f'{value}')
         else:
             command_line_format.append(f'--{name}={value}')
-    options = parser.parse_args(" ".join(command_line_format))
+    options = parser.parse_args(sys.argv[1:] + command_line_format)
 
     if options.from_ppm:
         # Right now image playback is stand-alone

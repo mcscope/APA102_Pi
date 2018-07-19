@@ -29,16 +29,19 @@ class Demo(Scheme):
     ui_select = True
 
     def init(self):
+        self.counter = 0
         self.current_led = 0
-        self.PAUSE_BETWEEN_PAINTS = 1 / (10 * options.speed)
+        self.PAUSE_BETWEEN_PAINTS = 1 / (10 * self.options.speed)
 
     def paint(self):
+        self.counter += 1
+        self.current_led += 1
+        self.strip.rotate()
+
         r, g, b = hue_to_rgb(self.current_led / self.options.num_leds)
         self.strip.set_pixel(self.current_led, r, g, b, self.options.brightness)
-        self.current_led += 1
         if self.current_led >= self.options.num_leds:
             self.current_led = 0
-            strip.rotate()
 
         return True
 
@@ -48,4 +51,4 @@ class Demo(Scheme):
         we must reset it. This should let us speed up without resetting.
         """
         super().on_options_change(self, new_options)
-        self.PAUSE_BETWEEN_PAINTS = 1 / (10 * options.speed)
+        self.PAUSE_BETWEEN_PAINTS = 1 / (10 * self.options.speed)

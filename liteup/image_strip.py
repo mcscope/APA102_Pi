@@ -1,7 +1,9 @@
+import os
 from APA102 import APA102
 from lib.ppm import write_image
 
 filename = "scheme_images/strip.ppm"
+filename = os.path.join(os.path.dirname(__file__), filename)
 
 
 class ImageStrip(APA102):

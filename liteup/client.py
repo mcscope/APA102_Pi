@@ -25,8 +25,8 @@ def main():
         # this is the supervisor loop
 
         old_scheme = None
+        old_config = None
         config = parse_options()
-        old_config = config
 
         Stripcls = ImageStrip if config.save_image else APA102
         strip = Stripcls(num_leds=config.num_leds,
@@ -34,10 +34,12 @@ def main():
                          max_speed_hz=5000000)  # Initialize the strip
         while True:
             if config and config != old_config:
-                fresh_scheme = config.scheme
-                if fresh_scheme != old_config.scheme:
+                # we have a new config. We may need to change schemes
+                # or just update the current one
+
+                if not old_config or config.scheme != old_config.scheme:
                     # we need to change schemes
-                    SchemeCls = SCHEME_CHOICES[fresh_scheme.lower()]
+                    SchemeCls = SCHEME_CHOICES[config.scheme.lower()]
 
                     if old_scheme:
                         old_scheme.stop()
@@ -77,6 +79,7 @@ async def get_config(config):
             return None
         config = parse_options(first_response)
         return config
+
 
 async def fetch(server, session):
     """Fetch a url, using specified ClientSession."""
