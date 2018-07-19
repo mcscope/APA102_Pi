@@ -73,6 +73,15 @@ def ConfigChange():
     if new_scheme:
         app.current_scheme = new_scheme
 
+        # flush any custom options that are now unsupported
+        cur_scheme_cls = [s for s in all_schemes
+                          if s.__name__ == app.current_scheme][0]
+        app.custom_options = {key: value
+
+                              for key, value in app.custom_options.items()
+                              if key in cur_scheme_cls.options_supported or
+                              key == 'scheme'}
+
     return redirect("/")
 
 

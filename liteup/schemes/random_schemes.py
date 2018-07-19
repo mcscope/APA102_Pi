@@ -27,6 +27,8 @@ class RandomColorFade(Scheme):
 
 
 class Perlin(GeneratorScheme):
+    options_supported = ["brightness"]
+
     PAUSE_BETWEEN_PAINTS = 0.04
     ui_select = True
 

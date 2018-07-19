@@ -17,6 +17,8 @@ from liteup.lib.color import Color
 
 
 class OneOneOne(Scheme):
+    options_supported = ["brightness"]
+
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.6
@@ -27,8 +29,18 @@ class OneOneOne(Scheme):
     def paint(self):
         return False
 
+    def on_options_change(self, new_options):
+        """
+        because we set our brightness on init, when options change
+        we must re-init
+        """
+        super().on_options_change(self, new_options)
+        self.init()
+
 
 class RainbowWaves(GeneratorScheme):
+    options_supported = ["brightness"]
+
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.010
@@ -43,6 +55,8 @@ class RainbowWaves(GeneratorScheme):
 
 
 class RainbowSmooth(GeneratorScheme):
+    options_supported = ["brightness"]
+
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.06
@@ -57,6 +71,8 @@ class RainbowSmooth(GeneratorScheme):
 
 
 class Partytime(GeneratorScheme):
+    options_supported = ["brightness"]
+
     ui_select = True
 
     def generator(self):
@@ -70,6 +86,8 @@ class Partytime(GeneratorScheme):
 
 
 class HueTest(GeneratorScheme):
+    options_supported = ["brightness"]
+
     ui_select = True
 
     PAUSE_BETWEEN_PAINTS = 0.010
@@ -95,6 +113,8 @@ class Strobe(Scheme):
 
 
 class MaxWhite(Scheme):
+    options_supported = ["brightness"]
+
     PAUSE_BETWEEN_PAINTS = 0.6
 
     def init(self):
@@ -102,6 +122,14 @@ class MaxWhite(Scheme):
 
     def paint(self):
         return False
+
+    def on_options_change(self, new_options):
+        """
+        because we set our brightness on init, when options change
+        we must re-init
+        """
+        super().on_options_change(self, new_options)
+        self.init()
 
 
 class Nice(Scheme):
@@ -150,6 +178,7 @@ class Breath(Scheme):
 
 
 class Dark(Scheme):
+
     PAUSE_BETWEEN_PAINTS = 10
 
     def init(self):

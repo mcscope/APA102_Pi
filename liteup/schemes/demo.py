@@ -24,6 +24,8 @@ from liteup.APA102.color_utils import hue_to_rgb
 
 
 class Demo(Scheme):
+    options_supported = ["brightness", "speed"]
+
     ui_select = True
 
     def init(self):
@@ -39,3 +41,11 @@ class Demo(Scheme):
             strip.rotate()
 
         return True
+
+    def on_options_change(self, new_options):
+        """
+        because we set our pause value on init, when options change
+        we must reset it. This should let us speed up without resetting.
+        """
+        super().on_options_change(self, new_options)
+        self.PAUSE_BETWEEN_PAINTS = 1 / (10 * options.speed)

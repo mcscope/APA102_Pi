@@ -23,8 +23,9 @@ class Scheme:
     PAUSE_BETWEEN_PAINTS = 0.001  # Override to control animation speed!
     autofade = False
     ui_select = True
-
-    options_supported = ["brightness"]
+    # Override this if you'd like any ui-configurable options for you.
+    # options must be defined in options.py
+    options_supported = []
 
     def __init__(self, strip, options):
         self.strip = strip
