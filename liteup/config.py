@@ -1,5 +1,5 @@
-# example config for a 144 led strip.
+# example config for a 30 led strip.
 corners = [0, 72]
 center = 72
-num_leds = 144
+num_leds = 30
 brightness = 6

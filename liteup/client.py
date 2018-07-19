@@ -31,7 +31,9 @@ def main():
         Stripcls = ImageStrip if config.save_image else APA102
         strip = Stripcls(num_leds=config.num_leds,
                          order="RGB",
-                         max_speed_hz=5000000)  # Initialize the strip
+                         max_speed_hz=4000000)
+        # Supposed to be 8k but
+        # we get flicker at the end if I set that
         while True:
             if config and config != old_config:
                 # we have a new config. We may need to change schemes

@@ -8,4 +8,5 @@
 .\#*
 *egg-info
 *pycache*
-config.py
+*config.py
+liteup/config.py
