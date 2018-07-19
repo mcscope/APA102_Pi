@@ -23,7 +23,7 @@ this may also be helpful
 
 [https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0](https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0)
 
-###Setup - Flashing the card
+## Setup - Flashing the card
 
 - Download latest version of raspbarian lite:
 [https://www.raspberrypi.org/downloads/raspbian/](https://www.raspberrypi.org/downloads/raspbian/)
@@ -31,7 +31,7 @@ this may also be helpful
 - write image to sd card
 (I use the program etcher on osX)
 
-###Setup - Editing the card
+## Setup - Editing the card
 - mount sd card and edit some files!
     - add ssh file
 
@@ -48,7 +48,7 @@ this may also be helpful
         `dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=4d3ee428-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2,g_ether quiet init=/usr/lib/raspi-config/init_resize.sh
 
 
-###Setup - Boot the Pi
+## Setup - Boot the Pi
 
 - eject sd card
 - insert into pi
@@ -78,7 +78,7 @@ this may also be helpful
 
         if it doesn't respond to ssh, maybe the ip address is wrong, or maybe you forgot to make a `ssh` file?
 
-###Setup - Post-Login
+## Setup - Post-Login
 
 You have a few tasks here:
 There are two annoying text editors built in vi and nano. You can use either to edit these files. Once we edit them we'll enable wifi and you can download a better text editor.
