@@ -87,6 +87,9 @@ class Scheme:
         """
         self.running = False
 
+    def on_new_options(self, new_options):
+        self.options = new_options
+
     # A bunch of utility functions!
     def setall(self, color):
         for led in range(self.strip.num_leds):

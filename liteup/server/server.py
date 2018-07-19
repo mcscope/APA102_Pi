@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = 'This is really unique and secret'
 app.config['DEBUG'] = True
 app.current_scheme = None
-app.options = {}
+app.custom_options = {}
 options = parse_options()
 
 
@@ -30,17 +30,12 @@ class ConfigOption:
         global options
         name = action.option_strings[-1][2:]
         choices = action.choices
-        if not choices:
-            # we should populate values manually.
-            if action.type == int:
-                choices = [0, 20, 40, 60, 80, 100]
-            # TODO more here
 
         return cls(
             name=name,
             data_type=action.type,
-            cur_value=getattr(options, name, None),
-            choices=choices,
+            cur_value=app.custom_options.get(name),
+            choices=action.choices,
             description=action.help,
         )
 
@@ -57,6 +52,7 @@ def LiteupBase():
 
         config_strings = set([f"--{name}"
                               for name in cur_scheme_cls.options_supported])
+
         config_options = [
             ConfigOption.from_parser_action(action) for action in parser._actions
             if config_strings.intersection(set(action.option_strings))]
@@ -72,18 +68,18 @@ def LiteupBase():
 @app.route('/config', methods=["POST"])
 def ConfigChange():
     print(request.form)
-    app.options.update(request.form.to_dict())
-    scheme_name = request.form.get('scheme_name', None)
-    if scheme_name:
-        app.current_scheme = scheme_name
+    app.custom_options.update(request.form.to_dict())
+    new_scheme = request.form.get('scheme', None)
+    if new_scheme:
+        app.current_scheme = new_scheme
 
     return redirect("/")
 
 
 @app.route('/config', methods=["GET"])
 def ConfigAPI():
-    print(app.options)
-    return jsonify(app.options)
+    print(app.custom_options)
+    return jsonify(app.custom_options)
 
 
 if __name__ == "__main__":

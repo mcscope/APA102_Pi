@@ -111,7 +111,7 @@
       <div class="scheme_choices"" >
     {% endif %}
       <form method="post" action="/config">
-        <input value="{{ scheme_name }}" name="scheme_name" type="hidden"  >
+        <input value="{{ scheme_name }}" name="scheme" type="hidden"  >
         <button type="submit" style="background-image:url({{url_for('static', filename=scheme_image)}});">
           {{ scheme_name }}
         </button>

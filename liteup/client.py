@@ -19,69 +19,64 @@ def main():
     The scheme yields every loop to let the supervisor have a chance to run
     Cooperative multitasking! Good when you write a single client!
     """
-    options = parse_options()
     loop = asyncio.get_event_loop()  # event loop
 
     async def launch():
         # this is the supervisor loop
 
-        old_config = {}
         old_scheme = None
-        fresh_config = {"scheme_name": options.scheme}
-        Stripcls = ImageStrip if options.save_image else APA102
-        strip = Stripcls(num_leds=options.num_leds,
+        config = parse_options()
+        old_config = config
+
+        Stripcls = ImageStrip if config.save_image else APA102
+        strip = Stripcls(num_leds=config.num_leds,
                          order="RGB",
                          max_speed_hz=5000000)  # Initialize the strip
         while True:
-            if fresh_config and fresh_config != old_config:
-                print(f"fresh config: {fresh_config}")
-
-                # todo is it possible to truely parse these options with
-                # configargparse?
-                for name, value in fresh_config.items():
-                    # todo attempt to not fake this
-                    if name == "scheme_name":
-                        continue
-                    if name == 'brightness':
-                        options.brightness = int(value)
-                        print(options.brightness)
-
-                fresh_scheme = fresh_config.get("scheme_name")
-                if fresh_scheme != old_config.get("scheme_name"):
-                    # TODO maybe we should ALWAYS do this on a config change
-                    # is it ever safe to update options on the fly?
+            if config and config != old_config:
+                fresh_scheme = config.scheme
+                if fresh_scheme != old_config.scheme:
+                    # we need to change schemes
                     SchemeCls = SCHEME_CHOICES[fresh_scheme.lower()]
 
                     if old_scheme:
                         old_scheme.stop()
 
-                    scheme = SchemeCls(strip, options=options)
+                    scheme = SchemeCls(strip, options=config)
                     old_scheme = scheme
                     asyncio.ensure_future(scheme.start())
+                else:
+                    scheme.on_new_options(config)
 
-                old_config = fresh_config
+                old_config = config
 
-            if not options.isolate:
-                fresh_config = await get_fresh_config(options)
+            if not config.isolate:
+                new_config = await get_config(config)
+                if new_config:
+                    config = new_config
             await asyncio.sleep(1)
-
     loop.run_until_complete(launch())  # loop until done
 
 
-async def get_fresh_config(options):
+async def get_config(config):
     """Launch requests for all web pages."""
-    options.servers
     tasks = []
     async with ClientSession() as session:
-        for server in options.servers:
+        for server in config.servers:
 
             task = asyncio.ensure_future(fetch(server, session))
             tasks.append(task)  # create list of tasks
         responses = await asyncio.gather(*tasks)  # gather task responses
     print(responses)
     if responses:
-        # TODO this should be based on timestamp, not just the first one
-        return responses.pop()
+        # TODO this should be based on timestamp of change,
+        # not just the first one receieved
+        # so if two servers, the most recently edited one wins.
+        first_response = responses.pop()
+        if not first_response:
+            return None
+        config = parse_options(first_response)
+        return config
 
 async def fetch(server, session):
     """Fetch a url, using specified ClientSession."""

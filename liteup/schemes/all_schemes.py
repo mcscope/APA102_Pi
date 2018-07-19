@@ -11,7 +11,7 @@ from liteup.schemes.twinkle_scheme import TwinkleScheme
 from liteup.schemes.agent_scheme import AgentScheme
 from liteup.schemes.sort_scheme import Sort
 from liteup.schemes.distribution import Distribution
-from liteup.schemes.beta import Beta
+# from liteup.schemes.beta import Beta
 from liteup.schemes.demo import Demo
 
 Scheme_subclasses = Scheme.__subclasses__()

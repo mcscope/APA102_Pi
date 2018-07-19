@@ -26,10 +26,9 @@ from liteup.APA102.color_utils import hue_to_rgb
 class Demo(Scheme):
     ui_select = True
 
-    PAUSE_BETWEEN_PAINTS = 0.010
-
     def init(self):
         self.current_led = 0
+        self.PAUSE_BETWEEN_PAINTS = 1 / (10 * options.speed)
 
     def paint(self):
         r, g, b = hue_to_rgb(self.current_led / self.options.num_leds)

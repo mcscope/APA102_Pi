@@ -21,6 +21,7 @@ parser.add('-c', '--my-config', required=False, is_config_file=True, help='confi
 parser.add('scheme', type=str.lower, nargs="?", help='Choose a Scheme to show!', choices=SCHEME_CHOICES, default="flux")
 parser.add('--servers', type=str, action='append', help='What servers should I recieve config from? defaults to ["127.0.0.1:5000"]', default=["127.0.0.1:5000"])
 parser.add('-b', '--brightness', type=int, help='percentage brighness 1-100. Not everything respects this', default=100)
+parser.add('--speed', type=int, help='speed 1-100.', default=100)
 parser.add('--corners', type=int, action='append', help='Where are meaningful start points in the installation?', default=[])
 parser.add('--center', type=int, help='Wheres the logical center of the leds?', default=0)
 parser.add('--force_hour', type=int, help='force an hour (for flux)')
@@ -36,8 +37,14 @@ parser.add('--sort_alg',
            default="")
 
 
-def parse_options():
-    options = parser.parse_args()
+def parse_options(extra_config={}):
+    command_line_format = []
+    for name, value in extra_config.items():
+        if name == "scheme":
+            command_line_format.append(f'{value}')
+        else:
+            command_line_format.append(f'--{name}={value}')
+    options = parser.parse_args(" ".join(command_line_format))
 
     if options.from_ppm:
         # Right now image playback is stand-alone
