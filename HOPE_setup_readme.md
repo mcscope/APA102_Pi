@@ -93,8 +93,9 @@ also replace the hostname in this file with your new name
 - change the password (optional but wise)
 `passwd`
 
-- configure wireless if you haven't already
+- configure wireless if you haven't already, for convenience.
 /etc/wpa_supplicant/wpa_supplicant.conf
+(you need to use whatever the ssid and password of hopeconf is. I don't know yet. This is optional, you can continue using usb ethernet only for now, but you'll probably want to put it on the wifi when you install this at home or where-ever)
 ```
 country=US
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -116,8 +117,13 @@ make sure you can see google:
 - install convenience packages
 
 `sudo apt-get install vim`
+
+
 or
 `sudo apt-get install emacs`
+
+Your preference - just don't tell me anything about which is your preference :-P
+
 
 - install dependencies
 `sudo apt-get install git`
@@ -168,7 +174,7 @@ you can either use vim/emacs to edit on the pi, or if you are used to a visual t
 
 - write your first scheme! you can open schemes/demo.py and start editing that scheme to get started.
 
-#Setup: - WIRE IT UP:
+## Setup: - WIRE IT UP:
 
 Here's how we're going to wire the LED strip to the Pi:
 ![Circuit Diagram](Wiring.png)
@@ -202,4 +208,4 @@ I don't think I have headers in these kits so we'll solder right to the Raspberr
  - For Very Long strips, you may run into an issue with the data/clock single weakening as the strip goes on. I haven't found a good solution to this. You can try decreasing the clock rate, splitting the strip into several smaller ones, and maybe boosting the data/clock signal to 5v before it enters the strip, as it will come out of the pi at 3.3v
 
 #### for 2d arrays and other shapes
-    - You can cut the led strip along the 'cut line' between the pads, and rearrange it into whatever shape you want. You can also buy APA102 leds in a grid format
+ - You can cut the led strip along the 'cut line' between the pads, and rearrange it into whatever shape you want. You can also buy APA102 leds in a grid format
