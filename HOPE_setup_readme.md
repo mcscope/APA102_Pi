@@ -45,7 +45,7 @@ this may also be helpful
         -`cmdline.txt`
             replace contents with
 
-        `dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=4d3ee428-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2,g_ether quiet init=/usr/lib/raspi-config/init_resize.sh
+        `dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=4d3ee428-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2,g_ether quiet init=/usr/lib/raspi-config/init_resize.sh`
 
 
 ## Setup - Boot the Pi
@@ -94,18 +94,19 @@ also replace the hostname in this file with your new name
 `passwd`
 
 - configure wireless if you haven't already, for convenience.
+
+
 /etc/wpa_supplicant/wpa_supplicant.conf
 (you need to use whatever the ssid and password of hopeconf is. I don't know yet. This is optional, you can continue using usb ethernet only for now, but you'll probably want to put it on the wifi when you install this at home or where-ever)
-```
-country=US
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-network={
-       ssid="SSID"
-       psk="PASSWORD"
-       key_mgmt=WPA-PSK
-    }
-```
+
+    country=US
+    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+    update_config=1
+    network={
+           ssid="SSID"
+           psk="PASSWORD"
+           key_mgmt=WPA-PSK
+        }
 
 Then... REBOOT!
 you should have a individually named raspberry pi on the wifi network now. Log in with your new hostname
