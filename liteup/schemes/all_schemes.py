@@ -14,6 +14,7 @@ from liteup.schemes.flowball import FlowBall
 from liteup.schemes.distribution import Distribution
 # from liteup.schemes.beta import Beta
 from liteup.schemes.demo import Demo
+from liteup.schemes.art_schemes import Complement
 
 Scheme_subclasses = Scheme.__subclasses__()
 all_schemes = Scheme.__subclasses__()
